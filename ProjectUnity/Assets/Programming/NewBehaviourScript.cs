@@ -8,7 +8,7 @@ public class NewBehaviourScript : MonoBehaviour
     void Start()
     {
         transform.Translate(0, 0, 0);
-        
+        transform.Translate(0, 0, 0);
     }
 
     // Update is called once per frame
