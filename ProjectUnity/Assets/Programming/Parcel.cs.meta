@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 6a2f2b87e46b09749b36b3882ba47630
+guid: 596104bba39db9748844509b71c49781
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - boxLong: {fileID: 919132149155446097, guid: d68eb5c501249464b97b782fcd8ca812, type: 3}
+  - boxWide: {fileID: 919132149155446097, guid: 8d25a0dc8df36c14f91f6368e7f39261, type: 3}
+  - boxLarge: {fileID: 919132149155446097, guid: 9f15d31a5c132d3458f82c0c07d8be9e, type: 3}
+  - boxSmall: {fileID: 919132149155446097, guid: 866b41f823eef9d45b857e7ecb1a1718, type: 3}
+  - anotherConveyor: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

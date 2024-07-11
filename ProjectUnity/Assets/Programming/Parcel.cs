@@ -1,59 +1,48 @@
-using UnityVector3 = UnityEngine.Vector3;
+using System.Collections.Generic;
 using UnityEngine;
-using NumericsVector3 = System.Numerics.Vector3;
-using UnityEngine.UIElements;
-
-namespace parcal {
-
-public sealed class Parcel : MonoBehaviour{
 
 
-    public GameObject LargeBoxor; 
+public class Parcel : MonoBehaviour{
+        List<GameObject> DifferentBoxes = new List<GameObject>();
+        public GameObject boxLong;
+        public GameObject boxWide;
+        public GameObject boxLarge;
+        public GameObject boxSmall;
+        //public GameObject anotherConveyor;
+        private Vector3 startingPosition;
 
-    public GameObject ConveyerLong; /* where the LargeBox would go to and labels
-                                the truck as a GameObject to be accessible inside 
-                                the world. */
-    [SerializeField] float speed = 5f; /* The speed of how fast the box is going.
-                                            Once the box touches the conveyer via trigger
-                                            then it will start moving torwards its destination. Making this a 
-                                            SerializeField so we don't tinker the movement while accessing other
-                                            scripts and making it visible to the inspector. Makes it public to the
-                                            naked eye (*)v(*) but prevents further changes*/
-
-    public Rigidbody LargeBoxConnecter; /*Connecting LargeBoxConnector to the GetComponent<RigidBody>*/
 
     // Start is called before the first frame update
     void Start(){
+
+        DifferentBoxes.Add(boxLong);
+        DifferentBoxes.Add(boxWide);
+        DifferentBoxes.Add(boxLarge);
+        DifferentBoxes.Add(boxSmall);
+    }
+
+    // Update is called once per frame
+    void Update(){
+
+            RandomBox();
+    }
+
+    private void RandomBox(){
+
+        int randomize = Random.Range(0, DifferentBoxes.Count);
+        GameObject ofSomeBox = DifferentBoxes[randomize];
+        ofSomeBox.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+        SpawnBox(ofSomeBox);
+
+    }
+
+     public void SpawnBox(GameObject BoxFromOther){
         
+        if(Input.GetKeyDown(KeyCode.Space)){
+        startingPosition = new Vector3(-2.43f, 0.87f, Random.Range(-0.2f, 1.9f));
+        Instantiate(BoxFromOther, startingPosition, Quaternion.identity);
+         }
     }
 
-    // Update is called once per frame  
-
-    void Update() {
-
-    }
-
-    void OnCollisionEnter(Collision other) {
-
-    }
-
-
-
-    void OnTriggerEnter(Collider LargeBox) {
-
-        LargeBoxConnecter = LargeBox.GetComponent<Rigidbody>();
-
-                    
-                if(LargeBox.CompareTag("box-large") && LargeBoxConnecter != null){ 
-                    LargeBoxor.transform.position = Vector3.MoveTowards(LargeBoxor.transform.position, 
-                                                                        ConveyerLong.transform.position, 
-                                                                        speed * Time.deltaTime); 
-                }
-
-        
-    }
-    
-    
+  
 }
-}
- 
