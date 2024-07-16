@@ -81,7 +81,7 @@ public class Parcel : MonoBehaviour{
          int randomZipIndex = Random.Range(0, ZipCode.Count);
          int ActualZipCode = ZipCode[randomZipIndex];
          
-
+   
 
 
      }
