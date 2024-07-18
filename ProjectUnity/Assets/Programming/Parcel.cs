@@ -99,15 +99,16 @@ public class Parcel : MonoBehaviour{
                                                         because of unecessary code*/
         switch(ZipCodeFromOther){
             case 30190:
-            Debug.Log($"{ZipCodeFromOther} and the box is {BoxFromOther}");
-            startingPosition = new Vector3(-2.43f, 0.87f, Random.Range(-0.2f, 1.9f)); /*Making specific coordinates where the parcels                                                                should spawn in the Gameworld. */
+            direct.Bin1(BoxFromOther, ZipCodeFromOther);
+            Debug.Log($"{BoxFromOther} having the zipcode of {ZipCodeFromOther}");
+            startingPosition = new Vector3(0.367f, -0.563f, Random.Range(-0.2f, 1.9f)); /*Making specific coordinates where the parcels                                                                should spawn in the Gameworld. */
             GameObject boxoring = Instantiate(BoxFromOther, startingPosition, Quaternion.identity); /*Creating randomized clones of parcels using the 
                                                                             BoxFromOther that was passed from tge SpawnBox function. 
                                                                             We then use the startingPosition coordinates that we made earlier.
                                                                           The last one that we made was was the Quaternion.identity to make no rotation.*/ 
             break;
             case 46675:
-             Debug.Log($"{ZipCodeFromOther} and the box is {BoxFromOther}");
+             Debug.Log($"{BoxFromOther} having the zip code of {ZipCodeFromOther}");
             startingPosition = new Vector3(-2.43f, 0.87f, Random.Range(-0.2f, 1.9f)); /*Making specific coordinates where the parcels                                                                should spawn in the Gameworld. */
             GameObject boxoring1 = Instantiate(BoxFromOther, startingPosition, Quaternion.identity); /*Creating randomized clones of parcels using the 
                                                                             BoxFromOther that was passed from tge SpawnBox function. 
@@ -115,7 +116,7 @@ public class Parcel : MonoBehaviour{
                                                                           The last one that we made was was the Quaternion.identity to make no rotation.*/ 
             break;
             case 11075:
-            Debug.Log($"{ZipCodeFromOther} and the box is {BoxFromOther}");
+            Debug.Log($"{BoxFromOther} having the zip code of {ZipCodeFromOther}");
             startingPosition = new Vector3(-2.43f, 0.87f, Random.Range(-0.2f, 1.9f)); /*Making specific coordinates where the parcels                                                                should spawn in the Gameworld. */
             GameObject boxoring2 = Instantiate(BoxFromOther, startingPosition, Quaternion.identity); /*Creating randomized clones of parcels using the 
                                                                             BoxFromOther that was passed from tge SpawnBox function. 
@@ -124,7 +125,7 @@ public class Parcel : MonoBehaviour{
 
             break;
             case 24701:
-            Debug.Log($"{ZipCodeFromOther} and the box is {BoxFromOther}");
+            Debug.Log($"{BoxFromOther} having the zip code of {ZipCodeFromOther}");
             startingPosition = new Vector3(-2.43f, 0.87f, Random.Range(-0.2f, 1.9f)); /*Making specific coordinates where the parcels                                                                should spawn in the Gameworld. */
             GameObject something = Instantiate(BoxFromOther, startingPosition, Quaternion.identity); /*Creating randomized clones of parcels using the 
                                                                             BoxFromOther that was passed from tge SpawnBox function. 
