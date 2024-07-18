@@ -12467,10 +12467,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 596104bba39db9748844509b71c49781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxLong: {fileID: 919132149155446097, guid: d68eb5c501249464b97b782fcd8ca812, type: 3}
-  boxWide: {fileID: 919132149155446097, guid: 8d25a0dc8df36c14f91f6368e7f39261, type: 3}
   boxLarge: {fileID: 919132149155446097, guid: 9f15d31a5c132d3458f82c0c07d8be9e, type: 3}
-  boxSmall: {fileID: 919132149155446097, guid: 866b41f823eef9d45b857e7ecb1a1718, type: 3}
+  Box_1: {fileID: 1181574321910500, guid: 139657e373e33664f9376f59fd08184e, type: 3}
+  Box_2: {fileID: 1745481740348960, guid: b59bf6a163c105e4985405750426f447, type: 3}
+  Barrel: {fileID: 1666674533226788, guid: 2a50c600c02247440ad48ca1f358d1b7, type: 3}
+  direct: {fileID: 0}
 --- !u!1 &1560005056 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4357463042871253635, guid: 0c0a32fe8057ba847b4c849835bb280b, type: 3}
