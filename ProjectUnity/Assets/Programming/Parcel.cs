@@ -105,7 +105,7 @@ public class Parcel : MonoBehaviour{
                                                                                                      BoxFromOther that was passed from tge SpawnBox function. 
                                                                                                     We then use the startingPosition coordinates that we made earlier.
                                                                                                     The last one that we made was was the Quaternion.identity to make no rotation.*/
-            direct.Bin1(boxoring, ZipCodeFromOther);
+           direct.Bin1(boxoring);
             
             break;
 
