@@ -36,10 +36,12 @@ public class Parcel : MonoBehaviour{
                                              meaning we want all the parcels to spawn at 
                                              the loading area.*/
 
-        public Directions direct;
+        // public Directions direct;
+    int StartingWayPoint = 0;
+    float speed; 
+    public GameObject [] WayPointPositions;
+    private GameObject introwoning;
                                                   
-        
-
 
     // Start is called before the first frame update
     void Start(){
@@ -72,6 +74,9 @@ public class Parcel : MonoBehaviour{
            if(Input.GetKeyDown(KeyCode.Space)){ //Pressing space makes the box spawn
             RandomBox(); //Calling the RandomBox function to generate a parcel
            }
+           if(introwoning != null){
+                Bin1(introwoning);
+           }
            
     }
 
@@ -100,12 +105,11 @@ public class Parcel : MonoBehaviour{
         switch(ZipCodeFromOther){
             case 30190:
             Debug.Log($"{BoxFromOther} having the zipcode of {ZipCodeFromOther}");
-            startingPosition = new Vector3(-2.76f, 0.87f, 0.887f);
-            GameObject boxoring = Instantiate(BoxFromOther, startingPosition, Quaternion.identity); /*Creating randomized clones of parcels using the 
+            startingPosition = new Vector3(-2.271f, 0.8699999f, 0.8577683f);
+            introwoning = Instantiate(BoxFromOther, startingPosition, Quaternion.identity); /*Creating randomized clones of parcels using the 
                                                                                                      BoxFromOther that was passed from tge SpawnBox function. 
-                                                                                                    We then use the startingPosition coordinates that we made earlier.
+                                                                                                      We then use the startingPosition coordinates that we made earlier.
                                                                                                     The last one that we made was was the Quaternion.identity to make no rotation.*/
-           direct.Bin1(boxoring);
             
             break;
 
@@ -135,10 +139,32 @@ public class Parcel : MonoBehaviour{
                                                                           The last one that we made was was the Quaternion.identity to make no rotation.*/ 
             break;
 
+            
+
         }
 
-     }
-}
+        
+        }
+
+         public void Bin1(GameObject usingBox){
+            
+            speed = 5.0f * Time.deltaTime;
+            if(Vector3.Distance(usingBox.transform.position, WayPointPositions[StartingWayPoint].transform.position) <= 0.005f)
+                StartingWayPoint++;
+            
+
+            if(StartingWayPoint >= WayPointPositions.Length)
+                StartingWayPoint = 0;
+            
+                usingBox.transform.LookAt(WayPointPositions[StartingWayPoint].transform);
+                usingBox.transform.Translate(0, 0, speed);
+            
+        }
+    
+    }
+
+     
+
 
 /*The first idea of the parcel spawner was that we would have to create a seperate
 script that contained the ofSomeBox GameObject it would look like

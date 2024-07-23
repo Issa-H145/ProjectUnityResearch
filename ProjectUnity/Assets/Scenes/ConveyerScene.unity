@@ -13304,7 +13304,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1559731949}
   - component: {fileID: 1559731950}
-  - component: {fileID: 1559731951}
   m_Layer: 0
   m_Name: Spawnpoint
   m_TagString: Untagged
@@ -13343,45 +13342,12 @@ MonoBehaviour:
   Box_1: {fileID: 1181574321910500, guid: 139657e373e33664f9376f59fd08184e, type: 3}
   Box_2: {fileID: 1745481740348960, guid: b59bf6a163c105e4985405750426f447, type: 3}
   Barrel: {fileID: 1666674533226788, guid: 2a50c600c02247440ad48ca1f358d1b7, type: 3}
-  direct: {fileID: 1559731951}
---- !u!114 &1559731951
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1559731947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f4969f40b18cdc40bf3b4aa7161c49a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnSomeWay: {fileID: 919132149155446097, guid: 4fb742b7371a56a43807967c16843e32, type: 3}
   WayPointPositions:
   - {fileID: 101781576}
   - {fileID: 309293346}
   - {fileID: 595107493}
   - {fileID: 278497167}
   - {fileID: 724040110}
-  WayPointPositions1:
-  - {fileID: 1148221614}
-  - {fileID: 1922472873}
-  - {fileID: 1973534110}
-  - {fileID: 0}
-  - {fileID: 1432037445}
-  WayPointPositions2:
-  - {fileID: 2123038049}
-  - {fileID: 223320076}
-  - {fileID: 809254184}
-  - {fileID: 1837343625}
-  - {fileID: 415634098}
-  WayPointPositions3:
-  - {fileID: 357929169}
-  - {fileID: 2103515684}
-  - {fileID: 1837713691}
-  - {fileID: 1554929981}
-  - {fileID: 1864398978}
-  - {fileID: 2060277423}
 --- !u!1 &1560005056 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4357463042871253635, guid: 0c0a32fe8057ba847b4c849835bb280b, type: 3}
