@@ -6,6 +6,7 @@ TagManager:
   tags:
   - box-large
   - Box-long
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX
