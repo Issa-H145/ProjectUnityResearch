@@ -19,15 +19,11 @@ public class Parcel : MonoBehaviour{
         box = boxing;
         zipcode = zipper;
 
-     }
+        }
     }
 
-    public BoxInfo [] BoxSomething;
+        public BoxInfo [] BoxSomething;
 
-    /*
-        public Dictionary<GameObject, int> DifferentBoxes = new Dictionary<GameObject, int>(); /*A list that contains
-        different parcel GameObjects. This list will contain the GameObjects that will be'
-        be used throughout the Conveyor*/
         public GameObject boxLarge; //Connected to the box-long asset in the scene
         public GameObject Box_1;
         public GameObject Box_2;
@@ -35,16 +31,27 @@ public class Parcel : MonoBehaviour{
         private Vector3 startingPosition; /*Declaring a specifc spawnPoint in the scene
                                              meaning we want all the parcels to spawn at 
                                              the loading area.*/
-
-        // public Directions direct;
     int StartingWayPoint = 0;
     float speed; 
     public GameObject [] WayPointPositions;
-    private GameObject introwoning;
+    public GameObject [] WayPointPositions1;
+    public GameObject [] WayPointPositions2;
+    public GameObject [] WayPointPositions3;
+    private GameObject [] introwonings = new GameObject[4];
+   
+    public PhysicsAndGravity Applied;
                                                   
 
     // Start is called before the first frame update
     void Start(){
+
+        if(Applied == null){
+            Applied = FindObjectOfType<PhysicsAndGravity>();
+        if(Applied == null){
+            Debug.LogError("PhysicsAndGravity is not found!");
+            }
+        }
+
 
         BoxSomething = new BoxInfo[]{
                 new BoxInfo(boxLarge, 30190),
@@ -74,9 +81,11 @@ public class Parcel : MonoBehaviour{
            if(Input.GetKeyDown(KeyCode.Space)){ //Pressing space makes the box spawn
             RandomBox(); //Calling the RandomBox function to generate a parcel
            }
-           if(introwoning != null){
-                Bin1(introwoning);
-           }
+        for (int i = 0; i < introwonings.Length; i++){
+                 if (introwonings[i] != null){
+                Movement(introwonings[i], GetWayPointPositions(i));
+            }
+        }
            
     }
 
@@ -102,64 +111,78 @@ public class Parcel : MonoBehaviour{
      public void SpawnBox(GameObject BoxFromOther, int ZipCodeFromOther){ /*This initially was on a seperate 
                                                         script but didn't think it was needed
                                                         because of unecessary code*/
-        switch(ZipCodeFromOther){
-            case 30190:
-            Debug.Log($"{BoxFromOther} having the zipcode of {ZipCodeFromOther}");
+
             startingPosition = new Vector3(-2.271f, 0.8699999f, 0.8577683f);
-            introwoning = Instantiate(BoxFromOther, startingPosition, Quaternion.identity); /*Creating randomized clones of parcels using the 
+
+                switch(ZipCodeFromOther){
+
+                    case 30190:
+                    Debug.Log($"{BoxFromOther} having the zipcode of {ZipCodeFromOther}");
+                    introwonings[0] = Instantiate(BoxFromOther, startingPosition, Quaternion.identity); /*Creating randomized clones of parcels using the 
                                                                                                      BoxFromOther that was passed from tge SpawnBox function. 
                                                                                                       We then use the startingPosition coordinates that we made earlier.
                                                                                                     The last one that we made was was the Quaternion.identity to make no rotation.*/
-            
-            break;
+                    break;
 
-            case 46675:
-             Debug.Log($"{BoxFromOther} having the zip code of {ZipCodeFromOther}");
-            startingPosition = new Vector3(-2.76f, 0.87f, 0.887f); /*Making specific coordinates where the parcels                                                                should spawn in the Gameworld. */
-            GameObject boxoring1 = Instantiate(BoxFromOther, startingPosition, Quaternion.identity); /*Creating randomized clones of parcels using the 
+                    case 46675:
+                    Debug.Log($"{BoxFromOther} having the zip code of {ZipCodeFromOther}");
+                    introwonings[1] = Instantiate(BoxFromOther, startingPosition, Quaternion.identity); /*Creating randomized clones of parcels using the 
                                                                             BoxFromOther that was passed from tge SpawnBox function. 
                                                                             We then use the startingPosition coordinates that we made earlier.
                                                                           The last one that we made was was the Quaternion.identity to make no rotation.*/ 
-            break;
-            case 11075:
-            Debug.Log($"{BoxFromOther} having the zip code of {ZipCodeFromOther}");
-            startingPosition = new Vector3(-2.76f, 0.87f, 0.887f); /*Making specific coordinates where the parcels                                                                should spawn in the Gameworld. */
-            GameObject boxoring2 = Instantiate(BoxFromOther, startingPosition, Quaternion.identity); /*Creating randomized clones of parcels using the 
+                    break;
+
+                    case 11075:
+                    Debug.Log($"{BoxFromOther} having the zip code of {ZipCodeFromOther}");
+                    introwonings[2] = Instantiate(BoxFromOther, startingPosition, Quaternion.identity); /*Creating randomized clones of parcels using the 
                                                                             BoxFromOther that was passed from tge SpawnBox function. 
                                                                             We then use the startingPosition coordinates that we made earlier.
                                                                           The last one that we made was was the Quaternion.identity to make no rotation.*/ 
 
-            break;
-            case 24701:
-            Debug.Log($"{BoxFromOther} having the zip code of {ZipCodeFromOther}");
-            startingPosition = new Vector3(-2.76f, 0.87f, 0.887f); /*Making specific coordinates where the parcels                                                                should spawn in the Gameworld. */
-            GameObject something = Instantiate(BoxFromOther, startingPosition, Quaternion.identity); /*Creating randomized clones of parcels using the 
+                    break;
+
+                    case 24701:
+                    Debug.Log($"{BoxFromOther} having the zip code of {ZipCodeFromOther}");
+                    introwonings[3] = Instantiate(BoxFromOther, startingPosition, Quaternion.identity); /*Creating randomized clones of parcels using the 
                                                                             BoxFromOther that was passed from tge SpawnBox function. 
                                                                             We then use the startingPosition coordinates that we made earlier.
                                                                           The last one that we made was was the Quaternion.identity to make no rotation.*/ 
-            break;
+                    break;
 
-            
+            }
 
-        }
+             Applied.rigidBodyRumcation(BoxFromOther);
 
         
         }
 
-         public void Bin1(GameObject usingBox){
-            
-            speed = 5.0f * Time.deltaTime;
-            if(Vector3.Distance(usingBox.transform.position, WayPointPositions[StartingWayPoint].transform.position) <= 0.005f)
-                StartingWayPoint++;
-            
+   private void Movement(GameObject box, GameObject[] waypoints){
+        if (waypoints == null || waypoints.Length == 0) return;
 
-            if(StartingWayPoint >= WayPointPositions.Length)
-                StartingWayPoint = 0;
-            
-                usingBox.transform.LookAt(WayPointPositions[StartingWayPoint].transform);
-                usingBox.transform.Translate(0, 0, speed);
-            
+        float step = speed * Time.deltaTime;
+        if (Vector3.Distance(box.transform.position, waypoints[StartingWayPoint].transform.position) <= 0.005f){
+            StartingWayPoint++;
         }
+
+        if (StartingWayPoint >= waypoints.Length){
+            StartingWayPoint = 0;
+        }
+
+        box.transform.LookAt(waypoints[StartingWayPoint].transform);
+        box.transform.Translate(0, 0, step);
+    }
+
+            private GameObject[] GetWayPointPositions(int index){
+
+                switch (index){
+
+                     case 0: return WayPointPositions;
+                     case 1: return WayPointPositions1;
+                     case 2: return WayPointPositions2;
+                     case 3: return WayPointPositions3;
+                     default: return null;
+            }
+         }
     
     }
 
