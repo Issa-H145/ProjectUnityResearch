@@ -6,12 +6,11 @@ using Palmmedia.ReportGenerator.Core.Reporting.Builders;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.RendererUtils;
+using UnityEngine.UIElements;
 
 public class PhysicsAndGravity : MonoBehaviour{
 
     private Dictionary<string, System.Action<GameObject>> actions;
-
-    Rigidbody included;
 
     void Start(){
 
@@ -20,7 +19,7 @@ public class PhysicsAndGravity : MonoBehaviour{
                         {"Barrel", BarrelPhysics},
                         {"Box_1", Box_1Physics},
                         {"Box_2", Box_2Physics},
-                        {"Box-large", Box_large}
+                        {"box-large", Box_large}
 
             };
 
@@ -42,24 +41,67 @@ public class PhysicsAndGravity : MonoBehaviour{
     }
 
     public void BarrelPhysics(GameObject Barrel){
-        included = Barrel.GetComponent<Rigidbody>();
-
+           ApplyRBandMC(Barrel);
+           
     }
 
     public void Box_1Physics(GameObject Box_1){
-        included = Box_1.GetComponent<Rigidbody>();
+           ApplyRBandMC(Box_1);
     }
 
     public void Box_2Physics(GameObject Box_2){
-
+          ApplyRBandMC(Box_2);
     }
     
     public void Box_large(GameObject Box_large){
+          ApplyRBandMC(Box_large);
+    }
 
+    public void ApplyRBandMC(GameObject Parcel){
+
+       Rigidbody Included = Parcel.GetComponent<Rigidbody>();
+       MeshCollider Oncluded = Parcel.GetComponent<MeshCollider>();
+
+        switch(Parcel.name){
+
+            case "Barrel": 
+
+                if(Included && Oncluded != null){
+                    Included.useGravity = true;
+                    Oncluded.convex = true;
+                }
+
+            break;
+
+            case "Box_1": 
+
+                if(Included != null){
+                    Included.useGravity = true;
+                }
+
+            break;
+
+            case "Box_2": 
+
+                if(Included != null){
+                    Included.useGravity = true;
+                }
+
+            break;
+
+            case "box-large": 
+
+                if(Included != null){
+                    Included.useGravity = true;
+                }
+
+            break;
+        }
     }
+}
     
     
-    }
+
         
 
 
