@@ -106,13 +106,13 @@ then it will go here.*/
                 MoveBox(introwoning, WayPointPositions);
            }
            if(introwoning1 != null){ //checks to see if the presence of the GameObject is available
-                MoveBox(introwoning1, WayPointPositions1);
+                MoveBox1(introwoning1, WayPointPositions1);
            }
            if(introwoning2 != null){ //checks to see if the presence of the GameObject is available
-                MoveBox(introwoning2, WayPointPositions2);
+                MoveBox2(introwoning2, WayPointPositions2);
            }
            if(introwoning3 != null){ //checks to see if the presence of the GameObject is available
-                MoveBox(introwoning3, WayPointPositions3);
+                MoveBox3(introwoning3, WayPointPositions3);
            }
            
     }
@@ -190,6 +190,123 @@ then it will go here.*/
         }
 
          public void MoveBox(GameObject usingBox, GameObject [] potets){ /*This is where the introwoning GameObjects and the WayPointPositions array will go to so the
+                                                                           Parcels can go to the trucks with the positions that they are assigned to */
+
+            speed = 3.5f * Time.deltaTime; //Specified the speed of the Parcel with the Time.deltaTime to be caught each frame
+            rotSpeed = 10.0f * Time.deltaTime; //Specified the rotation speed of the Parcel with the Time.deltaTime to be caught each frame
+            if(Vector3.Distance(usingBox.transform.position, potets[StartingWayPoint].transform.position) <= 0.001f){/*What we first do is find the distance that is between the parcel 
+                                                                                                                        and the next waypoint. we would then use a relational operator 
+                                                                                                                        is less than the fixed number that we gave it. This is saying that 
+                                                                                                                        the number that is less than 0.001f then it would increment and
+                                                                                                                        got to the next waypoint of the the potets/WaypointPositions array. */
+                StartingWayPoint++; //Increments to the next part of the potets/WayPointPositions array.
+         }
+
+            if(StartingWayPoint >= WayPointPositions.Length){ /*We would use this condition to see if the WayPointPositions array length that we have in the  
+                                                                is equal to the last waypoint like the waypoint is element 7 and the length of the array is the same case */
+                StartingWayPoint = 0; //Used for when the parcel reaches the truck.
+                Destroy(usingBox);/* Once the parcel reaches for the truck or when we start to put back the parcel into index 0, we destroy the GameObject. In technicallity, 
+                does go inside the truck but it's destroyed in the inside pretending that the parcel is shipped inside of a container */
+                }
+
+                Vector3 direction = (potets[StartingWayPoint].transform.position - usingBox.transform.position).normalized;/*A little concept was needed to perform this and what this would
+                                                                                                                            do is calculate the normalized direction vector from the current
+                                                                                                                            position of the box to the target waypoint. In General, this indicate 
+                                                                                                                            the direction and distance to the target wayPoint. Using normalized
+                                                                                                                            will make the rotations consistent and control movement to be much 
+                                                                                                                            easier to deal with.*/
+                usingBox.transform.Translate(direction * speed, Space.World); /*Using translate function to oversee the coordinates 
+                                                                                of the game world so the parcel is knowledgeable to 
+                                                                                know what to do.*/
+
+    
+                 Quaternion targetRotation = Quaternion.LookRotation(direction); /*Using the Quaternion.LookRotation to make the parcel look and turn 
+                                                                                    to the next waypoint of the system.*/
+                 usingBox.transform.rotation = Quaternion.Slerp(usingBox.transform.rotation, targetRotation, rotSpeed); /*Using the Quaternion.Slerp will make the rotations have a 
+                                                                                                                            smoother transiton from one rotation to another.*/
+
+    
+            }
+
+             public void MoveBox1(GameObject usingBox, GameObject [] potets){ /*This is where the introwoning GameObjects and the WayPointPositions array will go to so the
+                                                                           Parcels can go to the trucks with the positions that they are assigned to */
+
+            speed = 3.5f * Time.deltaTime; //Specified the speed of the Parcel with the Time.deltaTime to be caught each frame
+            rotSpeed = 10.0f * Time.deltaTime; //Specified the rotation speed of the Parcel with the Time.deltaTime to be caught each frame
+            if(Vector3.Distance(usingBox.transform.position, potets[StartingWayPoint].transform.position) <= 0.001f){/*What we first do is find the distance that is between the parcel 
+                                                                                                                        and the next waypoint. we would then use a relational operator 
+                                                                                                                        is less than the fixed number that we gave it. This is saying that 
+                                                                                                                        the number that is less than 0.001f then it would increment and
+                                                                                                                        got to the next waypoint of the the potets/WaypointPositions array. */
+                StartingWayPoint++; //Increments to the next part of the potets/WayPointPositions array.
+         }
+
+            if(StartingWayPoint >= WayPointPositions.Length){ /*We would use this condition to see if the WayPointPositions array length that we have in the  
+                                                                is equal to the last waypoint like the waypoint is element 7 and the length of the array is the same case */
+                StartingWayPoint = 0; //Used for when the parcel reaches the truck.
+                Destroy(usingBox);/* Once the parcel reaches for the truck or when we start to put back the parcel into index 0, we destroy the GameObject. In technicallity, 
+                does go inside the truck but it's destroyed in the inside pretending that the parcel is shipped inside of a container */
+                }
+
+                Vector3 direction = (potets[StartingWayPoint].transform.position - usingBox.transform.position).normalized;/*A little concept was needed to perform this and what this would
+                                                                                                                            do is calculate the normalized direction vector from the current
+                                                                                                                            position of the box to the target waypoint. In General, this indicate 
+                                                                                                                            the direction and distance to the target wayPoint. Using normalized
+                                                                                                                            will make the rotations consistent and control movement to be much 
+                                                                                                                            easier to deal with.*/
+                usingBox.transform.Translate(direction * speed, Space.World); /*Using translate function to oversee the coordinates 
+                                                                                of the game world so the parcel is knowledgeable to 
+                                                                                know what to do.*/
+
+    
+                 Quaternion targetRotation = Quaternion.LookRotation(direction); /*Using the Quaternion.LookRotation to make the parcel look and turn 
+                                                                                    to the next waypoint of the system.*/
+                 usingBox.transform.rotation = Quaternion.Slerp(usingBox.transform.rotation, targetRotation, rotSpeed); /*Using the Quaternion.Slerp will make the rotations have a 
+                                                                                                                            smoother transiton from one rotation to another.*/
+
+    
+            }
+
+             public void MoveBox2(GameObject usingBox, GameObject [] potets){ /*This is where the introwoning GameObjects and the WayPointPositions array will go to so the
+                                                                           Parcels can go to the trucks with the positions that they are assigned to */
+
+            speed = 3.5f * Time.deltaTime; //Specified the speed of the Parcel with the Time.deltaTime to be caught each frame
+            rotSpeed = 10.0f * Time.deltaTime; //Specified the rotation speed of the Parcel with the Time.deltaTime to be caught each frame
+            if(Vector3.Distance(usingBox.transform.position, potets[StartingWayPoint].transform.position) <= 0.001f){/*What we first do is find the distance that is between the parcel 
+                                                                                                                        and the next waypoint. we would then use a relational operator 
+                                                                                                                        is less than the fixed number that we gave it. This is saying that 
+                                                                                                                        the number that is less than 0.001f then it would increment and
+                                                                                                                        got to the next waypoint of the the potets/WaypointPositions array. */
+                StartingWayPoint++; //Increments to the next part of the potets/WayPointPositions array.
+         }
+
+            if(StartingWayPoint >= WayPointPositions.Length){ /*We would use this condition to see if the WayPointPositions array length that we have in the  
+                                                                is equal to the last waypoint like the waypoint is element 7 and the length of the array is the same case */
+                StartingWayPoint = 0; //Used for when the parcel reaches the truck.
+                Destroy(usingBox);/* Once the parcel reaches for the truck or when we start to put back the parcel into index 0, we destroy the GameObject. In technicallity, 
+                does go inside the truck but it's destroyed in the inside pretending that the parcel is shipped inside of a container */
+                }
+
+                Vector3 direction = (potets[StartingWayPoint].transform.position - usingBox.transform.position).normalized;/*A little concept was needed to perform this and what this would
+                                                                                                                            do is calculate the normalized direction vector from the current
+                                                                                                                            position of the box to the target waypoint. In General, this indicate 
+                                                                                                                            the direction and distance to the target wayPoint. Using normalized
+                                                                                                                            will make the rotations consistent and control movement to be much 
+                                                                                                                            easier to deal with.*/
+                usingBox.transform.Translate(direction * speed, Space.World); /*Using translate function to oversee the coordinates 
+                                                                                of the game world so the parcel is knowledgeable to 
+                                                                                know what to do.*/
+
+    
+                 Quaternion targetRotation = Quaternion.LookRotation(direction); /*Using the Quaternion.LookRotation to make the parcel look and turn 
+                                                                                    to the next waypoint of the system.*/
+                 usingBox.transform.rotation = Quaternion.Slerp(usingBox.transform.rotation, targetRotation, rotSpeed); /*Using the Quaternion.Slerp will make the rotations have a 
+                                                                                                                            smoother transiton from one rotation to another.*/
+
+    
+            }
+
+             public void MoveBox3(GameObject usingBox, GameObject [] potets){ /*This is where the introwoning GameObjects and the WayPointPositions array will go to so the
                                                                            Parcels can go to the trucks with the positions that they are assigned to */
 
             speed = 3.5f * Time.deltaTime; //Specified the speed of the Parcel with the Time.deltaTime to be caught each frame
