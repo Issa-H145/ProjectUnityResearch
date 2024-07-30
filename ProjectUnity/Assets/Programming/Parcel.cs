@@ -37,7 +37,7 @@ then it will go here.*/
     public GameObject[] WayPointPositions2; //WayPointPositions for the zip code 11075
     public GameObject[] WayPointPositions3; //WayPointPositions for the zip code 24701
 
-   // private PhysicsAndGravity Applied;
+   //private PhysicsAndGravity Applied;
 
     void Start(){
         /*
@@ -115,15 +115,22 @@ then it will go here.*/
         The parcelMovement.WayPointPositions = WayPointPositions, etc will call the WayPointPositions in the script and will use what it's given to move the parcel.*/
         switch (zipCode){
             case 30190:
+                Debug.Log($"{box} with a zip code {zipCode}");
                 parcelMovement.WayPointPositions = WayPointPositions; //Parcel Movement script will use the 30190 WayPointPositions
+
                 break;
             case 46675:
+                Debug.Log($"{box} with a zip code {zipCode}");
                 parcelMovement.WayPointPositions = WayPointPositions1; //Parcel Movement script will use the 46675 WayPointPositions
                 break;
+                
             case 11075:
+                Debug.Log($"{box} with a zip code {zipCode}");
                 parcelMovement.WayPointPositions = WayPointPositions2; //Parcel Movement script will use the 11075 WayPointPositions
                 break;
+
             case 24701:
+                Debug.Log($"{box} with a zip code {zipCode}");
                 parcelMovement.WayPointPositions = WayPointPositions3; //Parcel Movement script will use the 24701 WayPointPositions
                 break;
         }
