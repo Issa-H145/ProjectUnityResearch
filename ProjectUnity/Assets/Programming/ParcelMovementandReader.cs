@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.VisualScripting;
+
 
 public class ParcelMovement : MonoBehaviour{
     public GameObject[] WayPointPositions; //Declaring WayPoint Positions and whatever is passed from script
@@ -43,5 +45,6 @@ public class ParcelMovement : MonoBehaviour{
                                                                           to the next waypoint of the system.*/
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotSpeed * Time.deltaTime); /*Using the Quaternion.Slerp will make the rotations have a 
                                                                                                                 smoother transiton from one rotation to another.*/
+
     }
 }

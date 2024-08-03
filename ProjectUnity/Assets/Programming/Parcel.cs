@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics.SymbolStore;
 using System.Threading;
 using JetBrains.Annotations;
@@ -37,6 +38,8 @@ then it will go here.*/
     public GameObject [] WayPointPositions3; //WayPointPositions for the zip code 72532
     public GameObject [] WayPointPositions4; //WayPointPositions for the zip code 11075
     public GameObject [] WayPointPositions5; //WayPointPositions for the zip code 24701
+
+    
 
    //private PhysicsAndGravity Applied;
 
@@ -106,7 +109,7 @@ then it will go here.*/
     private void SpawnBox(GameObject box, int zipCode){ /*This initially was on a seperate 
                                                         script but didn't think it was needed
                                                         because of unecessary code*/
-        Vector3 startingPosition = new Vector3(-1.057f, 0.8720203f, 4.916f); //The positiin where the parcel is supposed to spawn.
+        Vector3 startingPosition = new Vector3(-0.629f, 0.872f, 6.0296f); //The positiin where the parcel is supposed to spawn.
         GameObject spawnedBox = Instantiate(box, startingPosition, Quaternion.identity); /*Creating randomized clones of parcels using the 
                                                                                             BoxFromOther that was passed from tge SpawnBox function. 
                                                                                             We then use the startingPosition coordinates that we made earlier.
@@ -115,32 +118,28 @@ then it will go here.*/
 
         ParcelMovement parcelMovement = spawnedBox.AddComponent<ParcelMovement>(); /*Attaching the GameObject to the parcel movement script to gain the functionality of movement. The parcel
                                                                                     movement script is where all the WayPointPosition arrays will go for movement based parcels*/
+        
 
         /*This is where the zip codes will go to depending on which zip code is spawned. Once the zipcode is spawned, it will be going to one of the test cases to see which one it goes to.
         The parcelMovement.WayPointPositions = WayPointPositions, etc will call the WayPointPositions in the script and will use what it's given to move the parcel.*/
         switch (zipCode){
             case 30190:
-                Debug.Log($"{box} with a zip code {zipCode}");
                 parcelMovement.WayPointPositions = WayPointPositions1; //Parcel Movement script will use the 30190 WayPointPositions
 
                 break;
             case 46675:
-                Debug.Log($"{box} with a zip code {zipCode}");
                 parcelMovement.WayPointPositions = WayPointPositions2; //Parcel Movement script will use the 46675 WayPointPositions
                 break;
 
             case 72532:
-                Debug.Log($"{box} with a zip code {zipCode}");
                 parcelMovement.WayPointPositions = WayPointPositions3;
                 break;
 
             case 11075:
-                Debug.Log($"{box} with a zip code {zipCode}");
                 parcelMovement.WayPointPositions = WayPointPositions4; //Parcel Movement script will use the 11075 WayPointPositions
                 break;
 
             case 24701:
-                Debug.Log($"{box} with a zip code {zipCode}");
                 parcelMovement.WayPointPositions = WayPointPositions5; //Parcel Movement script will use the 24701 WayPointPositions
                 break;
         }
