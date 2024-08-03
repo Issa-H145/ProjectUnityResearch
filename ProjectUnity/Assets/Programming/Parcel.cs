@@ -32,10 +32,11 @@ then it will go here.*/
     public GameObject Box_1; //Box_1 GameObject in the Game World
     public GameObject Box_2; //Box_2 GameObject in the Game World
     public GameObject Barrel; //Barrel GameObject in the Game World
-    public GameObject[] WayPointPositions; //WayPointPositions for the zip code 30190
-    public GameObject[] WayPointPositions1; //WayPointPositions for the zip code 46675
-    public GameObject[] WayPointPositions2; //WayPointPositions for the zip code 11075
-    public GameObject[] WayPointPositions3; //WayPointPositions for the zip code 24701
+    public GameObject [] WayPointPositions1; //WayPointPositions for the zip code 30190
+    public GameObject [] WayPointPositions2; //WayPointPositions for the zip code 46675
+    public GameObject [] WayPointPositions3; //WayPointPositions for the zip code 72532
+    public GameObject [] WayPointPositions4; //WayPointPositions for the zip code 11075
+    public GameObject [] WayPointPositions5; //WayPointPositions for the zip code 24701
 
    //private PhysicsAndGravity Applied;
 
@@ -61,6 +62,10 @@ then it will go here.*/
             new BoxInfo(Barrel, 46675),
             new BoxInfo(Box_1, 46675),
             new BoxInfo(Box_2, 46675),
+            new BoxInfo(boxLarge, 72532),
+            new BoxInfo(Barrel, 72532),
+            new BoxInfo(Box_1, 72532),
+            new BoxInfo(Box_2, 72532),
             new BoxInfo(boxLarge, 11075),
             new BoxInfo(Barrel, 11075),
             new BoxInfo(Box_1, 11075),
@@ -116,22 +121,27 @@ then it will go here.*/
         switch (zipCode){
             case 30190:
                 Debug.Log($"{box} with a zip code {zipCode}");
-                parcelMovement.WayPointPositions = WayPointPositions; //Parcel Movement script will use the 30190 WayPointPositions
+                parcelMovement.WayPointPositions = WayPointPositions1; //Parcel Movement script will use the 30190 WayPointPositions
 
                 break;
             case 46675:
                 Debug.Log($"{box} with a zip code {zipCode}");
-                parcelMovement.WayPointPositions = WayPointPositions1; //Parcel Movement script will use the 46675 WayPointPositions
+                parcelMovement.WayPointPositions = WayPointPositions2; //Parcel Movement script will use the 46675 WayPointPositions
                 break;
-                
+
+            case 72532:
+                Debug.Log($"{box} with a zip code {zipCode}");
+                parcelMovement.WayPointPositions = WayPointPositions3;
+                break;
+
             case 11075:
                 Debug.Log($"{box} with a zip code {zipCode}");
-                parcelMovement.WayPointPositions = WayPointPositions2; //Parcel Movement script will use the 11075 WayPointPositions
+                parcelMovement.WayPointPositions = WayPointPositions4; //Parcel Movement script will use the 11075 WayPointPositions
                 break;
 
             case 24701:
                 Debug.Log($"{box} with a zip code {zipCode}");
-                parcelMovement.WayPointPositions = WayPointPositions3; //Parcel Movement script will use the 24701 WayPointPositions
+                parcelMovement.WayPointPositions = WayPointPositions5; //Parcel Movement script will use the 24701 WayPointPositions
                 break;
         }
     }
