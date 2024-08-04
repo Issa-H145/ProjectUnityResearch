@@ -5,9 +5,12 @@ using System.Threading;
 using JetBrains.Annotations;
 using Palmmedia.ReportGenerator.Core.Reporting.Builders;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEditor;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.Analytics;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.UIElements;
 
 
@@ -28,30 +31,25 @@ then it will go here.*/
         }
     }
 
-    public BoxInfo[] BoxSomething; //Declaring the BoxInfo[] struct as BoxSomething
-    public GameObject boxLarge; //BoxLarge also known as box-large in the Game world
-    public GameObject Box_1; //Box_1 GameObject in the Game World
-    public GameObject Box_2; //Box_2 GameObject in the Game World
-    public GameObject Barrel; //Barrel GameObject in the Game World
+    [SerializeField] private BoxInfo[] BoxSomething; //Declaring the BoxInfo[] struct as BoxSomething
+    [SerializeField] private GameObject boxLarge; //BoxLarge also known as box-large in the Game world
+    [SerializeField] private GameObject Box_1; //Box_1 GameObject in the Game World
+    private GameObject Box_2; //Box_2 GameObject in the Game World
+    private GameObject Barrel; //Barrel GameObject in the Game World
     public GameObject [] WayPointPositions1; //WayPointPositions for the zip code 30190
     public GameObject [] WayPointPositions2; //WayPointPositions for the zip code 46675
     public GameObject [] WayPointPositions3; //WayPointPositions for the zip code 72532
+    public GameObject [] EmergencyRoute3;
     public GameObject [] WayPointPositions4; //WayPointPositions for the zip code 11075
+    public GameObject [] EmergencyRoute4;
     public GameObject [] WayPointPositions5; //WayPointPositions for the zip code 24701
+    public GameObject [] EmergencyRoute5;
 
-    
-
-   //private PhysicsAndGravity Applied;
+    public Faulty willCauseError;
 
     void Start(){
-        /*
-        Applied = FindObjectOfType<PhysicsAndGravity>();
-        if (Applied == null)
-        {
-            Debug.LogError("PhysicsAndGravity is not found!");
-        }
-        */
 
+        willCauseError = GetComponent<Faulty>();
         /*All the parcels and there corresponding information. Other attempts were made for this to be shorter like randomizing zip codes
         into randomized boxes but it lead to constant dead ends so it wasn't and option to use. Instead we use an array of structs with encapsulation to hold all 
         the information in as we start randomizing them.*/
@@ -78,12 +76,16 @@ then it will go here.*/
             new BoxInfo(Box_1, 24701),
             new BoxInfo(Box_2, 24701)
         };
+
     }
 
     void Update(){
+        
         if (Input.GetKeyDown(KeyCode.Space)){ //Pressing space makes the box spawn
-
             RandomBox(); //Calling the RandomBox function to generate a parcel
+        }
+        if(Input.GetKeyDown(KeyCode.S)){
+           willCauseError.Faultys();
         }
     }
 
@@ -118,6 +120,8 @@ then it will go here.*/
 
         ParcelMovement parcelMovement = spawnedBox.AddComponent<ParcelMovement>(); /*Attaching the GameObject to the parcel movement script to gain the functionality of movement. The parcel
                                                                                     movement script is where all the WayPointPosition arrays will go for movement based parcels*/
+        GameObject found = GameObject.Find("Sign_4");
+
         
 
         /*This is where the zip codes will go to depending on which zip code is spawned. Once the zipcode is spawned, it will be going to one of the test cases to see which one it goes to.
@@ -125,22 +129,37 @@ then it will go here.*/
         switch (zipCode){
             case 30190:
                 parcelMovement.WayPointPositions = WayPointPositions1; //Parcel Movement script will use the 30190 WayPointPositions
-
                 break;
+
             case 46675:
                 parcelMovement.WayPointPositions = WayPointPositions2; //Parcel Movement script will use the 46675 WayPointPositions
                 break;
 
             case 72532:
+                if(found == null){
                 parcelMovement.WayPointPositions = WayPointPositions3;
+                }
+                else if(found != null){
+                    parcelMovement.WayPointPositions = EmergencyRoute3;
+                }
                 break;
 
             case 11075:
+                if(found == null){
                 parcelMovement.WayPointPositions = WayPointPositions4; //Parcel Movement script will use the 11075 WayPointPositions
+                }
+                else if(found != null){
+                    parcelMovement.WayPointPositions = EmergencyRoute4;
+                }
                 break;
 
             case 24701:
+                if(found == null){
                 parcelMovement.WayPointPositions = WayPointPositions5; //Parcel Movement script will use the 24701 WayPointPositions
+            }
+                else if(found != null){
+                     parcelMovement.WayPointPositions = EmergencyRoute5;
+                }
                 break;
         }
     }
