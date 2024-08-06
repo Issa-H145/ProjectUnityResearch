@@ -10,13 +10,12 @@ public class Faulty : MonoBehaviour{
 
     public GameObject conveyorError;
 
-    private Vector3 rotation;
+    Vector3 FaultPosition = new Vector3(-17.912f, 1.59f, 2.373f);
+    Quaternion EulerPosition = Quaternion.Euler(-90.0f, 0.0f, 0.0f);
 
     public void Faultys(){
-
-        Vector3 FaultPosition = new Vector3(-17.912f, 1.025f, 2.592f);
-        GameObject ErrorSign = Instantiate(conveyorError, FaultPosition, Quaternion.identity);
-        //ErrorSign.transform.rotation = Quaternion.euler)
+        conveyorError.transform.localScale = new Vector3(1.5038f, 1.5038f, 1.5038f);
+        GameObject ErrorSign = Instantiate(conveyorError, FaultPosition, EulerPosition);
 
     }
     

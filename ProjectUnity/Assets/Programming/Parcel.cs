@@ -34,8 +34,8 @@ then it will go here.*/
     [SerializeField] private BoxInfo[] BoxSomething; //Declaring the BoxInfo[] struct as BoxSomething
     [SerializeField] private GameObject boxLarge; //BoxLarge also known as box-large in the Game world
     [SerializeField] private GameObject Box_1; //Box_1 GameObject in the Game World
-    private GameObject Box_2; //Box_2 GameObject in the Game World
-    private GameObject Barrel; //Barrel GameObject in the Game World
+    [SerializeField] private GameObject Box_2; //Box_2 GameObject in the Game World
+    [SerializeField] private GameObject Barrel; //Barrel GameObject in the Game World
     public GameObject [] WayPointPositions1; //WayPointPositions for the zip code 30190
     public GameObject [] WayPointPositions2; //WayPointPositions for the zip code 46675
     public GameObject [] WayPointPositions3; //WayPointPositions for the zip code 72532
@@ -44,6 +44,7 @@ then it will go here.*/
     public GameObject [] EmergencyRoute4;
     public GameObject [] WayPointPositions5; //WayPointPositions for the zip code 24701
     public GameObject [] EmergencyRoute5;
+    public List<GameObject> Destroyed = new List<GameObject>();
 
     public Faulty willCauseError;
 
@@ -80,11 +81,14 @@ then it will go here.*/
     }
 
     void Update(){
-        
         if (Input.GetKeyDown(KeyCode.Space)){ //Pressing space makes the box spawn
             RandomBox(); //Calling the RandomBox function to generate a parcel
         }
-        if(Input.GetKeyDown(KeyCode.S)){
+
+        else if(Input.GetKeyDown(KeyCode.S)){
+           foreach(GameObject destroying in Destroyed){
+           Destroy(destroying);
+           }
            willCauseError.Faultys();
         }
     }
@@ -120,7 +124,7 @@ then it will go here.*/
 
         ParcelMovement parcelMovement = spawnedBox.AddComponent<ParcelMovement>(); /*Attaching the GameObject to the parcel movement script to gain the functionality of movement. The parcel
                                                                                     movement script is where all the WayPointPosition arrays will go for movement based parcels*/
-        GameObject found = GameObject.Find("Sign_4");
+        GameObject found = GameObject.Find("Sign_4(Clone)");
 
         
 
