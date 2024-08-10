@@ -1,6 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.SymbolStore;
+using System.Reflection;
 using System.Threading;
 using JetBrains.Annotations;
 using Palmmedia.ReportGenerator.Core.Reporting.Builders;
@@ -115,12 +117,14 @@ then it will go here.*/
     private void SpawnBox(GameObject box, int zipCode){ /*This initially was on a seperate 
                                                         script but didn't think it was needed
                                                         because of unecessary code*/
-        Vector3 startingPosition = new Vector3(-0.629f, 0.872f, 6.0296f); //The positiin where the parcel is supposed to spawn.
+        Vector3 startingPosition = new Vector3(2.379f, 0.871f, 6.02f); //The positiin where the parcel is supposed to spawn.
+
         GameObject spawnedBox = Instantiate(box, startingPosition, Quaternion.identity); /*Creating randomized clones of parcels using the 
                                                                                             BoxFromOther that was passed from tge SpawnBox function. 
                                                                                             We then use the startingPosition coordinates that we made earlier.
                                                                                             The last one that we made was was the Quaternion.identity to make no rotation.*/
-       
+        
+
 
         ParcelMovement parcelMovement = spawnedBox.AddComponent<ParcelMovement>(); /*Attaching the GameObject to the parcel movement script to gain the functionality of movement. The parcel
                                                                                     movement script is where all the WayPointPosition arrays will go for movement based parcels*/
@@ -130,6 +134,7 @@ then it will go here.*/
 
         /*This is where the zip codes will go to depending on which zip code is spawned. Once the zipcode is spawned, it will be going to one of the test cases to see which one it goes to.
         The parcelMovement.WayPointPositions = WayPointPositions, etc will call the WayPointPositions in the script and will use what it's given to move the parcel.*/
+
         switch (zipCode){
             case 30190:
                 Debug.Log($"{box} with a zip code {zipCode}");
@@ -144,7 +149,7 @@ then it will go here.*/
             case 72532:
                 Debug.Log($"{box} with a zip code {zipCode}");
                 if(found == null){
-                parcelMovement.WayPointPositions = WayPointPositions3;
+                    parcelMovement.WayPointPositions = WayPointPositions3;
                 }
                 else if(found != null){
                     parcelMovement.WayPointPositions = EmergencyRoute3;
@@ -154,7 +159,7 @@ then it will go here.*/
             case 11075:
                 Debug.Log($"{box} with a zip code {zipCode}");
                 if(found == null){
-                parcelMovement.WayPointPositions = WayPointPositions4; //Parcel Movement script will use the 11075 WayPointPositions
+                    parcelMovement.WayPointPositions = WayPointPositions4; //Parcel Movement script will use the 11075 WayPointPositions
                 }
                 else if(found != null){
                     parcelMovement.WayPointPositions = EmergencyRoute4;
@@ -164,15 +169,23 @@ then it will go here.*/
             case 24701:
                 Debug.Log($"{box} with a zip code {zipCode}");
                 if(found == null){
-                parcelMovement.WayPointPositions = WayPointPositions5; //Parcel Movement script will use the 24701 WayPointPositions
-            }
+                    parcelMovement.WayPointPositions = WayPointPositions5; //Parcel Movement script will use the 24701 WayPointPositions
+                }
                 else if(found != null){
-                     parcelMovement.WayPointPositions = EmergencyRoute5;
+                    parcelMovement.WayPointPositions = EmergencyRoute5;
                 }
                 break;
-        }
+                
+            case 0:
+
+            
+                
+                break;
+                }
+            }
+        
     }
-}
+
     
     
 

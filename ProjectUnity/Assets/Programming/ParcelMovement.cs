@@ -22,7 +22,7 @@ public class ParcelMovement : MonoBehaviour{
                                                                                                                         is less than the fixed number that we gave it. This is saying that 
                                                                                                                         the number that is less than 0.001f then it would increment and
                                                                                                                         got to the next waypoint of the the potets/WaypointPositions array. */
-        
+
             currentWaypointIndex++; //Increments to the next part of the WayPointPositions array.
             if (currentWaypointIndex >= WayPointPositions.Length){
                 Destroy(gameObject); /* Once the parcel reaches for the truck or when we start to put back the parcel into index 0, we destroy the GameObject. In technicallity, 
@@ -46,5 +46,8 @@ public class ParcelMovement : MonoBehaviour{
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotSpeed * Time.deltaTime); /*Using the Quaternion.Slerp will make the rotations have a 
                                                                                                                 smoother transiton from one rotation to another.*/
 
+    }
+    private void reroute(int routing){
+        
     }
 }
