@@ -38,6 +38,10 @@ then it will go here.*/
     [SerializeField] private GameObject Box_1; //Box_1 GameObject in the Game World
     [SerializeField] private GameObject Box_2; //Box_2 GameObject in the Game World
     [SerializeField] private GameObject Barrel; //Barrel GameObject in the Game World
+    private GameObject reroutedBox;
+    private int waypointindex = 0;
+    private float speedy = 3.5f;
+    private float rotatingSpeed = 10.0f;
     public GameObject [] WayPointPositions1; //WayPointPositions for the zip code 30190
     public GameObject [] WayPointPositions2; //WayPointPositions for the zip code 46675
     public GameObject [] WayPointPositions3; //WayPointPositions for the zip code 72532
@@ -46,6 +50,7 @@ then it will go here.*/
     public GameObject [] EmergencyRoute4;
     public GameObject [] WayPointPositions5; //WayPointPositions for the zip code 24701
     public GameObject [] EmergencyRoute5;
+    public GameObject [] reroutingSystem;
     public List<GameObject> Destroyed = new List<GameObject>();
 
     public Faulty willCauseError;
@@ -77,7 +82,11 @@ then it will go here.*/
             new BoxInfo(boxLarge, 24701),
             new BoxInfo(Barrel, 24701),
             new BoxInfo(Box_1, 24701),
-            new BoxInfo(Box_2, 24701)
+            new BoxInfo(Box_2, 24701),
+            new BoxInfo(boxLarge, 0),
+            new BoxInfo(Barrel, 0),
+            new BoxInfo(Box_1, 0),
+            new BoxInfo(Box_2, 0)
         };
 
     }
@@ -92,6 +101,9 @@ then it will go here.*/
            Destroy(destroying);
            }
            willCauseError.Faultys();
+        }
+        if(reroutedBox != null){
+            reroute(reroutedBox);
         }
     }
 
@@ -117,15 +129,16 @@ then it will go here.*/
     private void SpawnBox(GameObject box, int zipCode){ /*This initially was on a seperate 
                                                         script but didn't think it was needed
                                                         because of unecessary code*/
+        
+        
         Vector3 startingPosition = new Vector3(2.379f, 0.871f, 6.02f); //The positiin where the parcel is supposed to spawn.
 
         GameObject spawnedBox = Instantiate(box, startingPosition, Quaternion.identity); /*Creating randomized clones of parcels using the 
                                                                                             BoxFromOther that was passed from tge SpawnBox function. 
                                                                                             We then use the startingPosition coordinates that we made earlier.
                                                                                             The last one that we made was was the Quaternion.identity to make no rotation.*/
-        
-
-
+        if(zipCode != 0){
+    
         ParcelMovement parcelMovement = spawnedBox.AddComponent<ParcelMovement>(); /*Attaching the GameObject to the parcel movement script to gain the functionality of movement. The parcel
                                                                                     movement script is where all the WayPointPosition arrays will go for movement based parcels*/
         GameObject found = GameObject.Find("Sign_4(Clone)");
@@ -175,15 +188,39 @@ then it will go here.*/
                     parcelMovement.WayPointPositions = EmergencyRoute5;
                 }
                 break;
-                
-            case 0:
-
-            
-                
-                break;
                 }
-            }
+        }
+
+        else{
+            Debug.Log("No visible zip code! Time to reroute again");
+            reroutedBox = spawnedBox;
+        }
+    }
         
+        private void reroute(GameObject mislead){
+
+                if(Vector3.Distance(mislead.transform.position, reroutingSystem[waypointindex].transform.position) <= 0.001F){
+                    waypointindex++;
+
+                    if(waypointindex >= reroutingSystem.Length){
+                        waypointindex = 0;
+                        int rando = Random.Range(0, BoxSomething.Length);
+                        int ActualZipCode = BoxSomething[rando].zipcode;
+                        reroutedBox = null;
+                        Destroy(mislead);
+                        SpawnBox(mislead, ActualZipCode);
+                        return;
+                    }
+                }
+
+            Vector3 unidirection = (reroutingSystem[waypointindex].transform.position - mislead.transform.position).normalized;
+
+            mislead.transform.Translate(unidirection * speedy * Time.deltaTime, Space.World);
+
+            Quaternion lookingfor = Quaternion.LookRotation(unidirection);
+
+            mislead.transform.rotation = Quaternion.Slerp(mislead.transform.rotation, lookingfor,  rotatingSpeed * Time.deltaTime);
+        }
     }
 
     

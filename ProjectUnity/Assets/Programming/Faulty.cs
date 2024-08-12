@@ -18,5 +18,4 @@ public class Faulty : MonoBehaviour{
         GameObject ErrorSign = Instantiate(conveyorError, FaultPosition, EulerPosition);
 
     }
-    
 }

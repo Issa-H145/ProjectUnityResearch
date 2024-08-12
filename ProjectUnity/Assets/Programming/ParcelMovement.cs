@@ -47,7 +47,4 @@ public class ParcelMovement : MonoBehaviour{
                                                                                                                 smoother transiton from one rotation to another.*/
 
     }
-    private void reroute(int routing){
-        
-    }
 }
