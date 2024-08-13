@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Diagnostics.SymbolStore;
 using System.Reflection;
@@ -11,6 +12,7 @@ using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Analytics;
 using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.UIElements;
@@ -39,9 +41,9 @@ then it will go here.*/
     [SerializeField] private GameObject Box_2; //Box_2 GameObject in the Game World
     [SerializeField] private GameObject Barrel; //Barrel GameObject in the Game World
     private GameObject reroutedBox;
-    private int waypointindex = 0;
-    private float speedy = 3.5f;
-    private float rotatingSpeed = 10.0f;
+    //private int waypointindex = 0;
+    //private float speedy = 3.5f;
+    //private float rotatingSpeed = 10.0f;
     public GameObject [] WayPointPositions1; //WayPointPositions for the zip code 30190
     public GameObject [] WayPointPositions2; //WayPointPositions for the zip code 46675
     public GameObject [] WayPointPositions3; //WayPointPositions for the zip code 72532
@@ -51,6 +53,7 @@ then it will go here.*/
     public GameObject [] WayPointPositions5; //WayPointPositions for the zip code 24701
     public GameObject [] EmergencyRoute5;
     public GameObject [] reroutingSystem;
+    public GameObject [] EmergencyReroutingSystem;
     public List<GameObject> Destroyed = new List<GameObject>();
 
     public Faulty willCauseError;
@@ -102,8 +105,11 @@ then it will go here.*/
            }
            willCauseError.Faultys();
         }
-        if(reroutedBox != null){
-            reroute(reroutedBox);
+        if(reroutedBox != null && GameObject.Find("Sign_4(Clone)") == null){
+            reroute(reroutedBox, reroutingSystem);
+        }
+        else if(reroutedBox != null && GameObject.Find("Sign_4(Clone)") != null){
+            reroute(reroutedBox, EmergencyReroutingSystem);
         }
     }
 
@@ -126,7 +132,7 @@ then it will go here.*/
                                             ofSomeBox and am integer zip code number*/
     }
 
-    private void SpawnBox(GameObject box, int zipCode){ /*This initially was on a seperate 
+    public void SpawnBox(GameObject box, int zipCode){ /*This initially was on a seperate 
                                                         script but didn't think it was needed
                                                         because of unecessary code*/
         
@@ -137,13 +143,14 @@ then it will go here.*/
                                                                                             BoxFromOther that was passed from tge SpawnBox function. 
                                                                                             We then use the startingPosition coordinates that we made earlier.
                                                                                             The last one that we made was was the Quaternion.identity to make no rotation.*/
+
+        GameObject found = GameObject.Find("Sign_4(Clone)");
+
         if(zipCode != 0){
     
         ParcelMovement parcelMovement = spawnedBox.AddComponent<ParcelMovement>(); /*Attaching the GameObject to the parcel movement script to gain the functionality of movement. The parcel
                                                                                     movement script is where all the WayPointPosition arrays will go for movement based parcels*/
-        GameObject found = GameObject.Find("Sign_4(Clone)");
 
-        
 
         /*This is where the zip codes will go to depending on which zip code is spawned. Once the zipcode is spawned, it will be going to one of the test cases to see which one it goes to.
         The parcelMovement.WayPointPositions = WayPointPositions, etc will call the WayPointPositions in the script and will use what it's given to move the parcel.*/
@@ -191,18 +198,31 @@ then it will go here.*/
                 }
         }
 
-        else{
+            if(zipCode == 0){
             Debug.Log("No visible zip code! Time to reroute again");
             reroutedBox = spawnedBox;
-        }
+            }
     }
+    
+    private void reroute(GameObject mislead, GameObject[] reroutingtype) {
+        var rerouteMovement = mislead.GetComponent<Reroutemovement>();
+        if (rerouteMovement == null) {
+            rerouteMovement = mislead.AddComponent<Reroutemovement>();
+        }
+        rerouteMovement.Initialize(reroutingtype, BoxSomething);
+    }
+}
         
-        private void reroute(GameObject mislead){
 
-                if(Vector3.Distance(mislead.transform.position, reroutingSystem[waypointindex].transform.position) <= 0.001F){
+
+
+        /*
+        private void reroute(GameObject mislead, GameObject [] reroutingtype){
+
+                if(Vector3.Distance(mislead.transform.position, reroutingtype[waypointindex].transform.position) <= 0.001F){
                     waypointindex++;
 
-                    if(waypointindex >= reroutingSystem.Length){
+                    if(waypointindex >= reroutingtype.Length){
                         waypointindex = 0;
                         int rando = Random.Range(0, BoxSomething.Length);
                         int ActualZipCode = BoxSomething[rando].zipcode;
@@ -213,7 +233,7 @@ then it will go here.*/
                     }
                 }
 
-            Vector3 unidirection = (reroutingSystem[waypointindex].transform.position - mislead.transform.position).normalized;
+            Vector3 unidirection = (reroutingtype[waypointindex].transform.position - mislead.transform.position).normalized;
 
             mislead.transform.Translate(unidirection * speedy * Time.deltaTime, Space.World);
 
@@ -222,20 +242,9 @@ then it will go here.*/
             mislead.transform.rotation = Quaternion.Slerp(mislead.transform.rotation, lookingfor,  rotatingSpeed * Time.deltaTime);
         }
     }
-
-    
-    
-
-/*The first idea of the parcel spawner was that we would have to create a seperate
-script that contained the ofSomeBox GameObject it would look like
-
-private Spawner ofSomeSpawn; <-- Calling the Spawner script
-
-ofSomeSpawn = GetComponent<Spawner>(); <-- Finding any object type in that script
-
-ofSomeSpawn.SpawnBox(ofSomeBox); <-- Calling a specific function in that script that we linked together.
-
-I decided to not include in a seperate script and only use it a parcel script.
-
-
 */
+
+    
+    
+    
+
