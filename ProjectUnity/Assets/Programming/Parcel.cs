@@ -40,27 +40,32 @@ then it will go here.*/
     [SerializeField] private GameObject Box_1; //Box_1 GameObject in the Game World
     [SerializeField] private GameObject Box_2; //Box_2 GameObject in the Game World
     [SerializeField] private GameObject Barrel; //Barrel GameObject in the Game World
-    private GameObject reroutedBox;
+    private GameObject reroutedBox; //Used to pass it to the reroute function and using it as a GameObject for spawnBox.
+
     //private int waypointindex = 0;
     //private float speedy = 3.5f;
     //private float rotatingSpeed = 10.0f;
+
     public GameObject [] WayPointPositions1; //WayPointPositions for the zip code 30190
     public GameObject [] WayPointPositions2; //WayPointPositions for the zip code 46675
     public GameObject [] WayPointPositions3; //WayPointPositions for the zip code 72532
-    public GameObject [] EmergencyRoute3;
+    public GameObject [] EmergencyRoute3, EmergencyRoute4, EmergencyRoute5; /*An Emergency route system for three different WayPointPositions. This will be used once
+                                                                                the error sign is visible to the parcels. */
     public GameObject [] WayPointPositions4; //WayPointPositions for the zip code 11075
-    public GameObject [] EmergencyRoute4;
     public GameObject [] WayPointPositions5; //WayPointPositions for the zip code 24701
-    public GameObject [] EmergencyRoute5;
-    public GameObject [] reroutingSystem;
-    public GameObject [] EmergencyReroutingSystem;
-    public List<GameObject> Destroyed = new List<GameObject>();
+    public GameObject [] reroutingSystem; //Rerouting system for loop based parcels that don't get scanned properly
+    public GameObject [] EmergencyReroutingSystem; /* Parcels that don't get scanned properly are also effected by the emergency route system. 
+                                                    This is only possible if the parcel is not scanned properly and if the error sign is visible. */
+    public List<GameObject> Destroyed = new List<GameObject>(); /* Destroys the gates when we hit the S key. This acts like a gate open 
+                                                                    system for new routes for parcels that deal with an error in the conveyor system. */
+    
 
-    public Faulty willCauseError;
+    public Faulty willCauseError; // Declaring the faultly script.
 
     void Start(){
 
-        willCauseError = GetComponent<Faulty>();
+        willCauseError = GetComponent<Faulty>(); //Connects to the Faulty component so errors can be visible in the Game World.
+
         /*All the parcels and there corresponding information. Other attempts were made for this to be shorter like randomizing zip codes
         into randomized boxes but it lead to constant dead ends so it wasn't and option to use. Instead we use an array of structs with encapsulation to hold all 
         the information in as we start randomizing them.*/
@@ -99,17 +104,25 @@ then it will go here.*/
             RandomBox(); //Calling the RandomBox function to generate a parcel
         }
 
+        /*When we press the S key, all of the gates will be open(destroyed). We use a list of gate GameObjects so once the S key is pressed then all four
+        gates will be opened so that the parcels will go througn.*/
         else if(Input.GetKeyDown(KeyCode.S)){
            foreach(GameObject destroying in Destroyed){
            Destroy(destroying);
            }
            willCauseError.Faultys();
         }
-        if(reroutedBox != null && GameObject.Find("Sign_4(Clone)") == null){
-            reroute(reroutedBox, reroutingSystem);
+        if(reroutedBox != null && GameObject.Find("Sign_4(Clone)") == null){ /*if the rerouted box GameObject is visible in the Game world but the Sign_4(Clone)
+                                                                                is not visible then it will continue through its normal loop route.*/
+
+            reroute(reroutedBox, reroutingSystem);/*GameObject reroutedBox and the regular reroutingSystem will be passed to the reroute function
+                                                    if it passes the conditions*/
         }
-        else if(reroutedBox != null && GameObject.Find("Sign_4(Clone)") != null){
-            reroute(reroutedBox, EmergencyReroutingSystem);
+        else if(reroutedBox != null && GameObject.Find("Sign_4(Clone)") != null){ /*If both rerouteBox GameObject and the Sign_4(Clone) are visible, then 
+                                                                                    the rerouted box will be proceed to go through the Emergency reroute system.*/
+
+            reroute(reroutedBox, EmergencyReroutingSystem); /*GameObject reroutedBox and the EmergencyReroutingSystem will be passed to the reroute 
+                                                            function if it meets the conditions.*/
         }
     }
 
@@ -144,9 +157,9 @@ then it will go here.*/
                                                                                             We then use the startingPosition coordinates that we made earlier.
                                                                                             The last one that we made was was the Quaternion.identity to make no rotation.*/
 
-        GameObject found = GameObject.Find("Sign_4(Clone)");
+        GameObject found = GameObject.Find("Sign_4(Clone)"); //The Gameworld checks to see if the GameObject found finds the Sign_4(Clone) GameObject.
 
-        if(zipCode != 0){
+        if(zipCode != 0){ /*IF the zip code is not 0 but it's the other type of zip codes then it proceed to go to one of the cases */
     
         ParcelMovement parcelMovement = spawnedBox.AddComponent<ParcelMovement>(); /*Attaching the GameObject to the parcel movement script to gain the functionality of movement. The parcel
                                                                                     movement script is where all the WayPointPosition arrays will go for movement based parcels*/
@@ -157,59 +170,59 @@ then it will go here.*/
 
         switch (zipCode){
             case 30190:
-                Debug.Log($"{box} with a zip code {zipCode}");
+                Debug.Log($"{box} with a zip code {zipCode}"); //Shows up on the console in Unity
                 parcelMovement.WayPointPositions = WayPointPositions1; //Parcel Movement script will use the 30190 WayPointPositions
                 break;
 
             case 46675:
-                Debug.Log($"{box} with a zip code {zipCode}");
+                Debug.Log($"{box} with a zip code {zipCode}"); //Shows up on the console in Unity
                 parcelMovement.WayPointPositions = WayPointPositions2; //Parcel Movement script will use the 46675 WayPointPositions
                 break;
 
             case 72532:
-                Debug.Log($"{box} with a zip code {zipCode}");
-                if(found == null){
-                    parcelMovement.WayPointPositions = WayPointPositions3;
+                Debug.Log($"{box} with a zip code {zipCode}"); //Shows up on the console in Unity
+                if(found == null){ // If the error sign is not visible
+                    parcelMovement.WayPointPositions = WayPointPositions3; // Goes through it's normal route system that uses the 72532 zip code if the error sign is not visible.
                 }
-                else if(found != null){
-                    parcelMovement.WayPointPositions = EmergencyRoute3;
+                else if(found != null){ //If the error sign is visible then the parcel will go through the rerouting system. Specifically for the 72532 zip code
+                    parcelMovement.WayPointPositions = EmergencyRoute3; //Goes through the emergency route system if the Error sign is visible.
                 }
                 break;
 
             case 11075:
-                Debug.Log($"{box} with a zip code {zipCode}");
-                if(found == null){
+                Debug.Log($"{box} with a zip code {zipCode}"); //Shows up on the console in Unity
+                if(found == null){ // If the error sign is not visible
                     parcelMovement.WayPointPositions = WayPointPositions4; //Parcel Movement script will use the 11075 WayPointPositions
                 }
-                else if(found != null){
-                    parcelMovement.WayPointPositions = EmergencyRoute4;
+                else if(found != null){ //If the error sign is visible then the parcel will go through the rerouting system. Specifically for the 11075 zip code
+                    parcelMovement.WayPointPositions = EmergencyRoute4; //Goes through the emergency route system if the Error sign is visible.
                 }
                 break;
 
             case 24701:
-                Debug.Log($"{box} with a zip code {zipCode}");
-                if(found == null){
+                Debug.Log($"{box} with a zip code {zipCode}"); //Shows up on the console in Unity
+                if(found == null){ // If the error sign is not visible
                     parcelMovement.WayPointPositions = WayPointPositions5; //Parcel Movement script will use the 24701 WayPointPositions
                 }
-                else if(found != null){
-                    parcelMovement.WayPointPositions = EmergencyRoute5;
+                else if(found != null){ //If the error sign is visible then the parcel will go through the rerouting system.
+                    parcelMovement.WayPointPositions = EmergencyRoute5; //Goes through the emergency route system if the Error sign is visible.
                 }
                 break;
                 }
         }
 
-            if(zipCode == 0){
+            if(zipCode == 0){ //If the Zip code is 0 then it will go through the rerouting system.
             Debug.Log("No visible zip code! Time to reroute again");
-            reroutedBox = spawnedBox;
+            reroutedBox = spawnedBox; //The reroutedBox will be the spawnedBox
             }
     }
     
     private void reroute(GameObject mislead, GameObject[] reroutingtype) {
-        var rerouteMovement = mislead.GetComponent<Reroutemovement>();
-        if (rerouteMovement == null) {
-            rerouteMovement = mislead.AddComponent<Reroutemovement>();
+        var rerouteMovement = mislead.GetComponent<Reroutemovement>();//The mislead GameObject will be attached to the Reroutemovement script.
+        if (rerouteMovement == null) { //If the rerouteMovement is not visible then it will be added to the mislead GameObject.
+            rerouteMovement = mislead.AddComponent<Reroutemovement>(); //The mislead GameObject will have the Reroutemovement script added to it.
         }
-        rerouteMovement.Initialize(reroutingtype, BoxSomething);
+        rerouteMovement.Initialize(reroutingtype, BoxSomething);//The rerouteMovement will be initialized with the reroutingtype and the BoxSomething array of structs.
     }
 }
         
