@@ -118,7 +118,7 @@ then it will go here.*/
             reroute(reroutedBox, reroutingSystem);/*GameObject reroutedBox and the regular reroutingSystem will be passed to the reroute function
                                                     if it passes the conditions*/
         }
-        else if(reroutedBox != null && GameObject.Find("Sign_4(Clone)") != null){ /*If both rerouteBox GameObject and the Sign_4(Clone) are visible, then 
+        if(reroutedBox != null && GameObject.Find("Sign_4(Clone)") != null){ /*If both rerouteBox GameObject and the Sign_4(Clone) are visible, then 
                                                                                     the rerouted box will be proceed to go through the Emergency reroute system.*/
 
             reroute(reroutedBox, EmergencyReroutingSystem); /*GameObject reroutedBox and the EmergencyReroutingSystem will be passed to the reroute 
@@ -159,7 +159,7 @@ then it will go here.*/
 
         GameObject found = GameObject.Find("Sign_4(Clone)"); //The Gameworld checks to see if the GameObject found finds the Sign_4(Clone) GameObject.
 
-        if(zipCode != 0){ /*IF the zip code is not 0 but it's the other type of zip codes then it proceed to go to one of the cases */
+        if(zipCode != 0){ /*If the zip code is not 0 but it's the other type of zip codes then it proceed to go to one of the cases */
     
         ParcelMovement parcelMovement = spawnedBox.AddComponent<ParcelMovement>(); /*Attaching the GameObject to the parcel movement script to gain the functionality of movement. The parcel
                                                                                     movement script is where all the WayPointPosition arrays will go for movement based parcels*/
@@ -226,9 +226,6 @@ then it will go here.*/
     }
 }
         
-
-
-
         /*
         private void reroute(GameObject mislead, GameObject [] reroutingtype){
 

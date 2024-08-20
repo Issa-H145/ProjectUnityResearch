@@ -22,6 +22,7 @@ public class Reroutemovement : MonoBehaviour{
     }
 
     private void MoveToNextWaypoint() { //Creating the MoveToNextWaypoint function`
+        string findingCloneClone = gameObject.name;
         if (Vector3.Distance(transform.position, reroutingtype[waypointindex].transform.position) <= 0.001F) { /*What we first do is find the distance that is between the parcel 
                                                                                                                 and the next waypoint. we would then use a relational operator 
                                                                                                                 is less than the fixed number that we gave it. This is saying that 
@@ -37,8 +38,11 @@ public class Reroutemovement : MonoBehaviour{
                 gameObject.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f); //Setting the scale of the parcel
                 Parcel parcelScript = FindObjectOfType<Parcel>(); //Finding the Parcel script
                 parcelScript.SpawnBox(gameObject, ActualZipCode); //Spawning the box with the gameObject and the ActualZipCode
-                return;
+                return; //Once the box is destroyed/stored, the return will not execute any further code after.
             }
+            if(findingCloneClone.Contains("(Clone)(Clone)")){
+                    Destroy(gameObject);
+                }
         }
 
         Vector3 direction = (reroutingtype[waypointindex].transform.position - transform.position).normalized; /*A little concept was needed to perform this and what this would
