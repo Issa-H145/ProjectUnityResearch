@@ -212,7 +212,7 @@ then it will go here.*/
         }
 
             if(zipCode == 0){ //If the Zip code is 0 then it will go through the rerouting system.
-            Debug.Log("No visible zip code! Time to reroute again");
+            Debug.Log("No visible zip code! Time to reroute again"); //Shows up on the console in Unity
             reroutedBox = spawnedBox; //The reroutedBox will be the spawnedBox
             }
     }
