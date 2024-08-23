@@ -18003,7 +18003,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.15686275, g: 0.15686275, b: 0.15686275, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -18052,13 +18052,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13556267, y: 0.86056757, z: -0.36606532, w: 0.32717323}
-  m_LocalPosition: {x: -18.002, y: 7.242, z: 11.255}
+  m_LocalRotation: {x: -0.016162213, y: 0.71782494, z: -0.6958694, w: 0.015233217}
+  m_LocalPosition: {x: -9.87, y: 7.242, z: 5.73}
   m_LocalScale: {x: 0.80152446, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 134.048, y: -41.849, z: -180.512}
+  m_LocalEulerAnglesHint: {x: 93.104004, y: -54.996002, z: -235.07199}
 --- !u!1 &966493744 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1899668590506541640, guid: 0c0a32fe8057ba847b4c849835bb280b, type: 3}

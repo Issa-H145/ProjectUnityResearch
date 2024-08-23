@@ -35,12 +35,11 @@ then it will go here.*/
         }
     }
 
-    [SerializeField] private BoxInfo[] BoxSomething; //Declaring the BoxInfo[] struct as BoxSomething
+    [SerializeField] public BoxInfo[] BoxSomething; //Declaring the BoxInfo[] struct as BoxSomething
     [SerializeField] private GameObject boxLarge; //BoxLarge also known as box-large in the Game world
     [SerializeField] private GameObject Box_1; //Box_1 GameObject in the Game World
     [SerializeField] private GameObject Box_2; //Box_2 GameObject in the Game World
     [SerializeField] private GameObject Barrel; //Barrel GameObject in the Game World
-    private GameObject reroutedBox; //Used to pass it to the reroute function and using it as a GameObject for spawnBox.
 
     //private int waypointindex = 0;
     //private float speedy = 3.5f;
@@ -112,21 +111,9 @@ then it will go here.*/
            }
            willCauseError.Faultys();
         }
-        if(reroutedBox != null && GameObject.Find("Sign_4(Clone)") == null){ /*if the rerouted box GameObject is visible in the Game world but the Sign_4(Clone)
-                                                                                is not visible then it will continue through its normal loop route.*/
-
-            reroute(reroutedBox, reroutingSystem);/*GameObject reroutedBox and the regular reroutingSystem will be passed to the reroute function
-                                                    if it passes the conditions*/
-        }
-        if(reroutedBox != null && GameObject.Find("Sign_4(Clone)") != null){ /*If both rerouteBox GameObject and the Sign_4(Clone) are visible, then 
-                                                                                    the rerouted box will be proceed to go through the Emergency reroute system.*/
-
-            reroute(reroutedBox, EmergencyReroutingSystem); /*GameObject reroutedBox and the EmergencyReroutingSystem will be passed to the reroute 
-                                                            function if it meets the conditions.*/
-        }
     }
 
-    private void RandomBox(){
+    public void RandomBox(){
         int randomize = Random.Range(0, BoxSomething.Length);/*Making an int randomize by 
                                                                 ranging 0 to the size of the 
                                                                 list being 15*/
@@ -211,18 +198,17 @@ then it will go here.*/
                 }
         }
 
-            if(zipCode == 0){ //If the Zip code is 0 then it will go through the rerouting system.
-            Debug.Log("No visible zip code! Time to reroute again"); //Shows up on the console in Unity
-            reroutedBox = spawnedBox; //The reroutedBox will be the spawnedBox
+            if(zipCode == 0){ //If the Zip code is 0 then it will go through the rerouting system
+            Debug.Log($"{box} with no visible zip code! Time to reroute!"); //Shows up on the console in Unity
+             Reroutemovement rerouters = spawnedBox.AddComponent<Reroutemovement>(); //The rerouters GameObject will be attached to the Reroutemovement script.
+                if(found == null){ //If the error sign is not visible
+                    rerouters.reroutingtype = reroutingSystem; //The rerouters will go through the rerouting system if the error sign is not visible.
+
+                }
+                else if(found != null){ //If the error sign is visible then the parcel will go through the emergency rerouting system.
+                    rerouters.reroutingtype = EmergencyReroutingSystem; //The rerouters will go through the emergency rerouting system if the error sign is visible.   
+                }
             }
-    }
-    
-    private void reroute(GameObject mislead, GameObject[] reroutingtype) {
-        var rerouteMovement = mislead.GetComponent<Reroutemovement>();//The mislead GameObject will be attached to the Reroutemovement script.
-        if (rerouteMovement == null) { //If the rerouteMovement is not visible then it will be added to the mislead GameObject.
-            rerouteMovement = mislead.AddComponent<Reroutemovement>(); //The mislead GameObject will have the Reroutemovement script added to it.
-        }
-        rerouteMovement.Initialize(reroutingtype, BoxSomething);//The rerouteMovement will be initialized with the reroutingtype and the BoxSomething array of structs.
     }
 }
         
@@ -254,7 +240,11 @@ then it will go here.*/
     }
 */
 
+
+
+
     
     
     
+
 
