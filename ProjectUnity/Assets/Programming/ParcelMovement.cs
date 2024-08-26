@@ -18,7 +18,7 @@ public class ParcelMovement : MonoBehaviour{
     }
 
     private void MoveBox(){
-        if (Vector3.Distance(transform.position, WayPointPositions[currentWaypointIndex].transform.position) <= 0.001f){ /*What we first do is find the distance that is between the parcel 
+        if (Vector3.Distance(transform.position, WayPointPositions[currentWaypointIndex].transform.position) <= 0.01f){ /*What we first do is find the distance that is between the parcel 
                                                                                                                         and the next waypoint. we would then use a relational operator 
                                                                                                                         is less than the fixed number that we gave it. This is saying that 
                                                                                                                         the number that is less than 0.001f then it would increment and

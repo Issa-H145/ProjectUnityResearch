@@ -23,7 +23,7 @@ public class Reroutemovement : MonoBehaviour{
 
         Parcel getting = FindAnyObjectByType<Parcel>();
 
-        if (Vector3.Distance(transform.position, reroutingtype[waypointindex].transform.position) <= 0.001F){
+        if (Vector3.Distance(transform.position, reroutingtype[waypointindex].transform.position) <= 0.01f){
             waypointindex++;
 
             if (waypointindex >= reroutingtype.Length){
